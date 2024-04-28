@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">ClearSky</string>
+    <string name="uv_index">UV Index: %.2f</string>
+</resources>
