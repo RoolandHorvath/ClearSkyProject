@@ -6,8 +6,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="25sp"
-    android:background="@drawable/gradient_bg">
+    android:padding="25sp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/mainContainer"
@@ -21,61 +20,53 @@
             android:orientation="vertical"
             android:gravity="center"
             tools:ignore="MissingConstraints">
+
             <TextView
                 android:id="@+id/address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="35sp"
-                android:text="KOŠICE, SK"/>
+                android:layout_gravity="right"
+                android:text="KOŠICE, SK"
+                android:textSize="20sp" />
+
             <TextView
-                android:id="@+id/updated_at"
+                android:id="@+id/temp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="25sp"
-                android:text="24 April 2024, 20:08 PM"/>
-        </LinearLayout>
+                android:layout_gravity="right"
+                android:fontFamily="sans-serif-thin"
+                android:text="14°C"
+                android:textSize="60sp" />
 
+            <LinearLayout
+                android:id="@+id/overviewContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="vertical"
+                tools:ignore="MissingConstraints">
 
-        <LinearLayout android:id="@+id/overviewContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_centerInParent="true"
-            tools:ignore="MissingConstraints">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <Space
+                        android:layout_width="70sp"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="50sp"
                 android:layout_gravity="center"
-                android:text="Sunny"/>
-            <TextView android:id="@+id/temp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="100sp"
-                android:fontFamily="sans-serif-thin"
-                android:layout_gravity="center"
-                android:text="14°C"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
-                <TextView android:id="@+id/temp_min"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Min Temp: 05:05 AM"/>
-                <Space android:layout_width="70sp"
-                    android:layout_height="wrap_content"/>
-
-                <TextView
-                    android:id="@+id/temp_max"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Max Temp: 05:05 PM"/>
-            </LinearLayout>
+                android:text="Sunny"
+                android:textSize="30sp" />
 
         </LinearLayout>
 
@@ -86,7 +77,9 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_alignParentBottom="true"
-            tools:ignore="MissingConstraints">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -186,105 +179,131 @@
 
             <Space
                 android:layout_width="wrap_content"
-                android:layout_height="10sp"/>
+                android:layout_height="1sp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:weightSum="3">
+
                 <LinearLayout
                     android:layout_width="0sp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:layout_weight="1"
+                    android:background="#3CF1EBF1"
                     android:gravity="center"
-                    android:padding="8sp"
-                    android:background="#3CF1EBF1">
+                    android:orientation="vertical"
+                    android:padding="8sp">
+
                     <ImageView
                         android:layout_width="25sp"
                         android:layout_height="25sp"
                         android:src="@drawable/pressure"
                         app:tint="#FFFFFF" />
+
                     <Space
                         android:layout_width="wrap_content"
-                        android:layout_height="5sp"/>
+                        android:layout_height="5sp" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
-                        android:text="Pressure"/>
+                        android:text="Pressure"
+                        android:textSize="12sp" />
+
                     <TextView
                         android:id="@+id/pressure"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:text="06:40 AM"/>
+                        android:text="06:40 AM"
+                        android:textSize="14sp" />
                 </LinearLayout>
+
                 <Space
                     android:layout_width="10sp"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
+
                 <LinearLayout
                     android:layout_width="0sp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:layout_weight="1"
+                    android:background="#3CF1EBF1"
                     android:gravity="center"
-                    android:padding="8sp"
-                    android:background="#3CF1EBF1">
+                    android:orientation="vertical"
+                    android:padding="8sp">
+
                     <ImageView
                         android:layout_width="25sp"
                         android:layout_height="25sp"
                         android:src="@drawable/humidity"
                         app:tint="#FFFFFF" />
+
                     <Space
                         android:layout_width="wrap_content"
-                        android:layout_height="5sp"/>
+                        android:layout_height="5sp" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
-                        android:text="Humidity"/>
+                        android:text="Humidity"
+                        android:textSize="12sp" />
+
                     <TextView
                         android:id="@+id/humidity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:text="06:40 AM"/>
+                        android:text="06:40 AM"
+                        android:textSize="14sp" />
                 </LinearLayout>
+
                 <Space
                     android:layout_width="10sp"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
+
                 <LinearLayout
                     android:layout_width="0sp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:layout_weight="1"
+                    android:background="#3CF1EBF1"
                     android:gravity="center"
-                    android:padding="8sp"
-                    android:background="#3CF1EBF1">
+                    android:orientation="vertical"
+                    android:padding="8sp">
+
                     <ImageView
                         android:layout_width="25sp"
                         android:layout_height="25sp"
                         android:src="@drawable/uvindex"
-                        app:tint="#FFFFFF"/>
+                        app:tint="#FFFFFF" />
+
                     <Space
                         android:layout_width="wrap_content"
-                        android:layout_height="5sp"/>
+                        android:layout_height="5sp" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
-                        android:text="UV Index"/>
+                        android:text="UV Index"
+                        android:textSize="12sp" />
+
                     <TextView
                         android:id="@+id/uv_index"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:text="1"/>
+                        android:text="1"
+                        android:textSize="14sp" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/updated_at"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="24 April 2024, 20:08 PM"
+            android:textSize="20sp"
+            tools:layout_editor_absoluteX="20dp"
+            tools:layout_editor_absoluteY="0dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

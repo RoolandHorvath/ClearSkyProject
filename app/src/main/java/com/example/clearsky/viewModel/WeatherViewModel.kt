@@ -21,19 +21,14 @@ class WeatherViewModel(private val city: String, private val apiKey: String) : V
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val response = RetrofitClient.instance.getCurrentWeather(city, apiKey)
-                Log.d(tag, "API Call successful: ${response.isSuccessful}")
                 if (response.isSuccessful) {
-                    Log.d(tag, "Weather Data: ${response.body()}")
                     _weatherData.postValue(response.body())
                 } else {
-                    Log.d(tag, "API Call failed: ${response.errorBody()?.string()}")
                     _weatherData.postValue(null)
                 }
             } catch (e: Exception) {
-                Log.e(tag, "API Call error: $e")
                 _weatherData.postValue(null)
             }
         }
     }
-
 }
