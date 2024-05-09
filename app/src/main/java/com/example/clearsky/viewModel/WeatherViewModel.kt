@@ -1,33 +1,28 @@
 package com.example.clearsky.viewModel
 
 import android.util.Log
-import androidx.lifecycle.*
-import com.example.clearsky.retrofit.RetrofitClient
-import com.example.clearsky.retrofit.WeatherResponse
-import kotlinx.coroutines.Dispatchers
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.clearsky.room.WeatherEntity
+import com.example.clearsky.room.WeatherRepository
 import kotlinx.coroutines.launch
 
-class WeatherViewModel(private val city: String, private val apiKey: String) : ViewModel() {
-    private val tag = "WeatherApp"
-    private val _weatherData = MutableLiveData<WeatherResponse?>()
-    val weatherData: LiveData<WeatherResponse?>
-        get() = _weatherData
-
-    init {
-        refreshWeatherData()
-    }
+class WeatherViewModel(private val repository: WeatherRepository) : ViewModel() {
+    private val _loading = MutableLiveData<Boolean>()
+    val loading: LiveData<Boolean> = _loading
+    val weatherData: LiveData<WeatherEntity?> = repository.getLatestWeatherData()
 
     fun refreshWeatherData() {
-        viewModelScope.launch(Dispatchers.IO) {
+        _loading.postValue(true)
+        viewModelScope.launch {
             try {
-                val response = RetrofitClient.instance.getCurrentWeather(city, apiKey)
-                if (response.isSuccessful) {
-                    _weatherData.postValue(response.body())
-                } else {
-                    _weatherData.postValue(null)
-                }
+                repository.refreshWeatherData("Kosice, SK", "8eda2e31b68afa4c7f28c172514e642d")
             } catch (e: Exception) {
-                _weatherData.postValue(null)
+                Log.e("WeatherViewModel", "Error refreshing data", e)
+            } finally {
+                _loading.postValue(false)
             }
         }
     }

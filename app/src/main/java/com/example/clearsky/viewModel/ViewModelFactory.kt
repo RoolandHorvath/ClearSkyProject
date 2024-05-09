@@ -2,15 +2,13 @@ package com.example.clearsky.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.liveData
-import com.example.clearsky.retrofit.RetrofitClient
-import kotlinx.coroutines.Dispatchers
+import com.example.clearsky.room.WeatherRepository
 
-class ViewModelFactory(private val city: String, private val apiKey: String) : ViewModelProvider.Factory {
+class ViewModelFactory(private val repository: WeatherRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(WeatherViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return WeatherViewModel(city, apiKey) as T
+            return WeatherViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

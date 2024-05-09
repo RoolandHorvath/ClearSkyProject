@@ -1,5 +1,7 @@
 package com.example.clearsky.retrofit
 
+import com.example.clearsky.room.WeatherEntity
+
 data class WeatherResponse(
     val coord: Coordinates,
     val weather: List<WeatherDescription>,
@@ -16,3 +18,12 @@ data class WeatherDescription(val id: Int, val main: String, val description: St
 data class Main(val temp: Double, val feels_like: Double, val temp_min: Double, val temp_max: Double, val pressure: Int, val humidity: Int)
 data class Wind(val speed: Double, val deg: Int)
 data class SystemInfo(val country: String, val sunrise: Long, val sunset: Long)
+
+fun WeatherResponse.toWeatherEntity(): WeatherEntity {
+    return WeatherEntity(
+        cityName = this.name,
+        temperature = this.main.temp,
+        description = this.weather.firstOrNull()?.description ?: "No description",
+        timestamp = System.currentTimeMillis()
+    )
+}
