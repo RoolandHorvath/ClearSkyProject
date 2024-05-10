@@ -2,6 +2,10 @@ package com.example.clearsky.retrofit
 
 import com.example.clearsky.room.WeatherEntity
 
+/**
+ * Data classes for parsing the JSON response from the OpenWeatherMap API.
+ * This pattern of data transformation is common in apps interfacing with REST APIs.
+ */
 data class WeatherResponse(
     val coord: Coordinates,
     val weather: List<WeatherDescription>,
@@ -19,6 +23,10 @@ data class Main(val temp: Double, val feels_like: Double, val temp_min: Double, 
 data class Wind(val speed: Double, val deg: Int)
 data class SystemInfo(val country: String, val sunrise: Long, val sunset: Long)
 
+/**
+ * Extension function to convert a network data model [WeatherResponse] into a database entity [WeatherEntity].
+ * This method allows for clean separation of network and database models.
+ */
 fun WeatherResponse.toWeatherEntity(): WeatherEntity {
     return WeatherEntity(
         cityName = this.name,

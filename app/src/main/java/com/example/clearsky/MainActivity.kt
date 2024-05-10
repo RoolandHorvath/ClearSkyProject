@@ -1,9 +1,8 @@
 package com.example.clearsky
 
-import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -18,6 +17,9 @@ import com.example.clearsky.viewModel.WeatherViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
+
+// Inšpirácia pre main activity dizajn od Coding With Evan - https://www.youtube.com/watch?v=gj0g1a75Lmo
+// Lokalizácia podľa https://www.youtube.com/watch?v=XNFz97zqN-E
 class MainActivity : AppCompatActivity() {
     private lateinit var swipeContainer: SwipeRefreshLayout
     private lateinit var viewModel: WeatherViewModel
@@ -26,17 +28,34 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Setup Database, Repository, ViewModelFactory, and ViewModel
         val database = AppDatabase.getInstance(this)
         val weatherDao = database.weatherDao()
         val repository = WeatherRepository.getInstance(weatherDao)
         val factory = ViewModelFactory(repository)
         viewModel = ViewModelProvider(this, factory).get(WeatherViewModel::class.java)
 
-        // Setup SwipeRefreshLayout and observe weather data
+        val gearIcon = findViewById<ImageView>(R.id.gearIcon)
+        gearIcon.setOnClickListener {
+            toggleLanguage()
+        }
+
         setupSwipeRefreshLayout()
         observeWeatherData()
         updateBackgroundBasedOnTimeOfDay()
+    }
+
+    private fun toggleLanguage() {
+        val newLang = if (Locale.getDefault().language != "sk") "sk" else "en"
+        setLocale(newLang)
+        recreate()
+    }
+
+    private fun setLocale(languageCode: String) {
+        val locale = Locale(languageCode)
+        Locale.setDefault(locale)
+        val config = resources.configuration
+        config.setLocale(locale)
+        resources.updateConfiguration(config, resources.displayMetrics)
     }
 
     private fun setupSwipeRefreshLayout() {
@@ -49,19 +68,18 @@ class MainActivity : AppCompatActivity() {
 
     private fun observeWeatherData() {
         viewModel.weatherData.observe(this) { weatherEntity ->
-            Log.d("MainActivity", "Observed weather data: $weatherEntity")
             weatherEntity?.let {
                 populateWeatherData(it)
                 updateBackgroundBasedOnWeather(it.description)
             }
-            swipeContainer.isRefreshing = false  // This should always be called to stop the refresh animation
+            swipeContainer.isRefreshing = false
         }
     }
 
     private fun formatTimestamp(timestamp: Long): String {
-        val date = Date(timestamp * 1000) // Ensure timestamp is in milliseconds
+        val date = Date(timestamp * 1000)
         val format = SimpleDateFormat("hh:mm a", Locale.ENGLISH)
-        format.timeZone = TimeZone.getDefault() // Adjust to the device's timezone
+        format.timeZone = TimeZone.getDefault()
         return format.format(date)
     }
 
@@ -89,7 +107,6 @@ class MainActivity : AppCompatActivity() {
         findViewById<RelativeLayout>(R.id.mainContainer).visibility = View.VISIBLE
     }
 
-
     private fun updateBackgroundBasedOnWeather(description: String) {
         val backgroundResId = when {
             description.contains("rain", ignoreCase = true) -> R.drawable.gradient_rain
@@ -102,31 +119,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateBackgroundBasedOnTimeOfDay() {
         val hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
-        val backgroundResId = if (hour in 6..18) {
-            R.drawable.gradient_bg
-        } else {
-            R.drawable.gradient_night
-        }
+        val backgroundResId = if (hour in 6..18) R.drawable.gradient_bg else R.drawable.gradient_night
         swipeContainer.setBackgroundResource(backgroundResId)
     }
 
     private fun isNightTime(): Boolean {
         val hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
         return hour < 6 || hour >= 21
-    }
-
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            Log.d("MainActivity", "Landscape orientation")
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            Log.d("MainActivity", "Portrait orientation")
-        }
-        // Optionally refresh the layout based on new configuration
-        updateUIBasedOnConfiguration(newConfig)
-    }
-
-    private fun updateUIBasedOnConfiguration(config: Configuration) {
-        // Here, you can update the layout or any other element based on orientation
     }
 }

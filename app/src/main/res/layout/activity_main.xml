@@ -13,24 +13,34 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="visible">
+
         <LinearLayout
             android:id="@+id/addressContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
+            <ImageView
+            android:id="@+id/gearIcon"
+            android:layout_width="29dp"
+            android:layout_height="31dp"
+            android:layout_gravity="end"
+            android:src="@drawable/settings_gear" />
             <TextView
                 android:id="@+id/address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="35sp"
-                android:text="KOŠICE, SK"/>
+                android:text="KOŠICE, SK"
+                android:textSize="35sp" />
+
             <TextView
                 android:id="@+id/updated_at"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="25sp"
-                android:text="24 April 2024, 20:08 PM"/>
+                android:text="24 April 2024, 20:08 PM"
+                android:textSize="25sp" />
+
+
         </LinearLayout>
 
 
@@ -46,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="50sp"
                 android:layout_gravity="center"
-                android:text="Sunny"/>
+                android:text="@string/current_weather" />
             <TextView android:id="@+id/temp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -96,7 +106,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="12sp"
-                        android:text="Sunrise"/>
+                        android:text="@string/sunrise"/>
                     <TextView
                         android:id="@+id/sunrise"
                         android:layout_width="wrap_content"
@@ -127,7 +137,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="12sp"
-                        android:text="Sunset"/>
+                        android:text="@string/sunset"/>
                     <TextView
                         android:id="@+id/sunset"
                         android:layout_width="wrap_content"
@@ -158,7 +168,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="12sp"
-                        android:text="Wind"/>
+                        android:text="@string/wind"/>
                     <TextView
                         android:id="@+id/wind"
                         android:layout_width="wrap_content"
@@ -197,7 +207,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="12sp"
-                        android:text="Pressure"/>
+                        android:text="@string/pressure"/>
                     <TextView
                         android:id="@+id/pressure"
                         android:layout_width="wrap_content"
@@ -228,7 +238,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="12sp"
-                        android:text="Humidity"/>
+                        android:text="@string/humidity"/>
                     <TextView
                         android:id="@+id/humidity"
                         android:layout_width="wrap_content"

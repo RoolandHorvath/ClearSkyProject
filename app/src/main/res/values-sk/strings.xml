@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ClearSky</string>
+    <string name="current_weather">Slnečno</string>
+    <string name="sunrise">Východ slnka</string>
+    <string name="sunset">Západ slnka</string>
+    <string name="wind">Vietor</string>
+    <string name="pressure">Tlak</string>
+    <string name="humidity">Vlhkosť</string>
+
+</resources>
