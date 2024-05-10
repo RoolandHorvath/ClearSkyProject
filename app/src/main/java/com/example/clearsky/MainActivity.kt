@@ -49,26 +49,46 @@ class MainActivity : AppCompatActivity() {
 
     private fun observeWeatherData() {
         viewModel.weatherData.observe(this) { weatherEntity ->
+            Log.d("MainActivity", "Observed weather data: $weatherEntity")
             weatherEntity?.let {
                 populateWeatherData(it)
                 updateBackgroundBasedOnWeather(it.description)
             }
-            swipeContainer.isRefreshing = false  // Ensure this is always called
+            swipeContainer.isRefreshing = false  // This should always be called to stop the refresh animation
         }
+    }
+
+    private fun formatTimestamp(timestamp: Long): String {
+        val date = Date(timestamp * 1000) // Ensure timestamp is in milliseconds
+        val format = SimpleDateFormat("hh:mm a", Locale.ENGLISH)
+        format.timeZone = TimeZone.getDefault() // Adjust to the device's timezone
+        return format.format(date)
     }
 
     private fun populateWeatherData(weatherEntity: WeatherEntity) {
         val address = "${weatherEntity.cityName}"
         val updatedAtText = "Updated at: " + SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.ENGLISH).format(Date(weatherEntity.timestamp))
         val temp = "${weatherEntity.temperature.toInt()}°C"
+        val sunriseTime = formatTimestamp(weatherEntity.sunrise)
+        val sunsetTime = formatTimestamp(weatherEntity.sunset)
+        val windSpeed = "${weatherEntity.windSpeed} m/s"
+        val pressure = "${weatherEntity.pressure} hPa"
+        val humidity = "${weatherEntity.humidity} %"
 
         findViewById<TextView>(R.id.address).text = address
         findViewById<TextView>(R.id.updated_at).text = updatedAtText
         findViewById<TextView>(R.id.temp).text = temp
+        findViewById<TextView>(R.id.sunrise).text = sunriseTime
+        findViewById<TextView>(R.id.sunset).text = sunsetTime
+        findViewById<TextView>(R.id.wind).text = windSpeed
+        findViewById<TextView>(R.id.pressure).text = pressure
+        findViewById<TextView>(R.id.humidity).text = humidity
+        findViewById<TextView>(R.id.status).text = weatherEntity.description
 
         findViewById<ProgressBar>(R.id.loader).visibility = View.GONE
         findViewById<RelativeLayout>(R.id.mainContainer).visibility = View.VISIBLE
     }
+
 
     private fun updateBackgroundBasedOnWeather(description: String) {
         val backgroundResId = when {

@@ -7,18 +7,33 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.clearsky.room.WeatherEntity
 import com.example.clearsky.room.WeatherRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class WeatherViewModel(private val repository: WeatherRepository) : ViewModel() {
+    private val _weatherData = MutableLiveData<WeatherEntity?>()
+    val weatherData: LiveData<WeatherEntity?> = _weatherData
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> = _loading
-    val weatherData: LiveData<WeatherEntity?> = repository.getLatestWeatherData()
+
+    init {
+        loadInitialData()
+    }
+
+    private fun loadInitialData() {
+        viewModelScope.launch(Dispatchers.IO) {
+            _weatherData.postValue(repository.getLatestWeatherData())
+        }
+    }
 
     fun refreshWeatherData() {
-        _loading.postValue(true)
-        viewModelScope.launch {
+        _loading.value = true
+        viewModelScope.launch(Dispatchers.IO) {
             try {
-                repository.refreshWeatherData("Kosice, SK", "8eda2e31b68afa4c7f28c172514e642d")
+                val refreshedData = repository.refreshWeatherData("Kosice, SK", "8eda2e31b68afa4c7f28c172514e642d")
+                refreshedData?.let {
+                    _weatherData.postValue(it)
+                }
             } catch (e: Exception) {
                 Log.e("WeatherViewModel", "Error refreshing data", e)
             } finally {

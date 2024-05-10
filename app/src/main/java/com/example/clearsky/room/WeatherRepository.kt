@@ -19,11 +19,10 @@ class WeatherRepository private constructor(private val weatherDao: WeatherDao) 
             }
     }
 
-    fun getLatestWeatherData(): LiveData<WeatherEntity?> = liveData {
-        val latestData = withContext(Dispatchers.IO) {
+    suspend fun getLatestWeatherData(): WeatherEntity? {
+        return withContext(Dispatchers.IO) {
             weatherDao.getLastWeatherData()
         }
-        emit(latestData)
     }
 
     // Fetch new data from the API and update the database

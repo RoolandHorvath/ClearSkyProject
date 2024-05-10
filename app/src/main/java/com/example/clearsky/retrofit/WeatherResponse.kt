@@ -24,6 +24,11 @@ fun WeatherResponse.toWeatherEntity(): WeatherEntity {
         cityName = this.name,
         temperature = this.main.temp,
         description = this.weather.firstOrNull()?.description ?: "No description",
-        timestamp = System.currentTimeMillis()
+        timestamp = System.currentTimeMillis(),
+        sunrise = this.sys.sunrise,
+        sunset = this.sys.sunset,
+        windSpeed = this.wind.speed,
+        pressure = this.main.pressure,
+        humidity = this.main.humidity
     )
 }
