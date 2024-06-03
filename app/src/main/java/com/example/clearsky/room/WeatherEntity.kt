@@ -4,8 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.clearsky.retrofit.WeatherResponse
-
-// Entity class represents a table within the database. Room uses this for database operations.
+// https://developer.android.com/training/data-storage/room/defining-data
 @Entity(tableName = "weather_table")
 data class WeatherEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
@@ -20,8 +19,6 @@ data class WeatherEntity(
     @ColumnInfo(name = "humidity") val humidity: Int
 )
 
-// Extension function to map network response to database entity. Inspired by
-// Retrofit and Room integration guide on Android developers.
 fun WeatherResponse.toWeatherEntity(): WeatherEntity {
     return WeatherEntity(
         cityName = this.name,

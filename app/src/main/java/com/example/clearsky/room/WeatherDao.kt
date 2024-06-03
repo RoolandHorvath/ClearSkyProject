@@ -5,7 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 
-// Data access object (DAO) for Room. Documentation: https://developer.android.com/training/data-storage/room/accessing-data
+// https://developer.android.com/training/data-storage/room/accessing-data
 @Dao
 interface WeatherDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)

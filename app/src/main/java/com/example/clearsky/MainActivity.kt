@@ -17,9 +17,13 @@ import com.example.clearsky.viewModel.WeatherViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
+// Inde to nie je spomenuté, ale tiež som použil Codelab kódy na stránke VMA ako inšpiráciu
 
 // Inšpirácia pre main activity dizajn od Coding With Evan - https://www.youtube.com/watch?v=gj0g1a75Lmo
-// Lokalizácia podľa https://www.youtube.com/watch?v=XNFz97zqN-E
+// Lokalizácia podľa https://www.youtube.com/watch?v=XNFz97zqN-E , a https://developer.android.com/guide/topics/resources/localization
+// Iné linky:
+// https://developer.android.com/develop/ui/views/touch-and-input/swipe/add-swipe-interface
+// https://developer.android.com/training/data-storage/room
 class MainActivity : AppCompatActivity() {
     private lateinit var swipeContainer: SwipeRefreshLayout
     private lateinit var viewModel: WeatherViewModel
